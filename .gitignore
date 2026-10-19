@@ -1,0 +1,22 @@
+# Fichiers Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environnement virtuel
+.venv/
+venv/
+ENV/
+
+# Dossier des PDF (pour ne pas envoyer tes documents privés sur GitHub)
+documents/
+
+# IDE (PyCharm / VS Code)
+.idea/
+.vscode/
+*.iml
+
+# Fichiers système
+.DS_Store
+Thumbs.db
