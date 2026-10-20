@@ -24,3 +24,5 @@ Aucune donnée n'est envoyée sur internet : tout reste sur ton ordinateur.
    ```bash
    git clone https://github.com/AnneLeclerc/agent-pdf-qwen.git
    cd agent-pdf-qwen
+
+Pour démarrer, il faut taper dans le terminal de pycharm (ou vscode) et taper :    streamlit run app.py
