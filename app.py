@@ -7,7 +7,7 @@ from llama_index.embeddings.ollama import OllamaEmbedding
 
 # === CONFIGURATION DE LA PAGE ===
 st.set_page_config(page_title="Agent PDF Qwen", layout="wide")
-st.title("🤖 Agent PDF avec Qwen")
+st.title(" Agent PDF avec Qwen")
 st.caption("Upload un PDF, pose ta question, obtiens une réponse (100% local et confidentiel).")
 
 # === CONFIGURATION DES MODÈLES ===
@@ -17,8 +17,8 @@ EMBED_MODEL_NAME = "nomic-embed-text"
 
 @st.cache_resource
 def get_models():
-    # SOLUTION DU TIMEOUT : request_timeout=300.0 donne 5 minutes au modèle pour répondre
-    llm = Ollama(model=MODEL_NAME, request_timeout=300.0)
+    # CORRECTION 1 : Timeout augmenté à 10 minutes (600 secondes) pour les gros modèles
+    llm = Ollama(model=MODEL_NAME, request_timeout=600.0)
     embed_model = OllamaEmbedding(model_name=EMBED_MODEL_NAME)
     return llm, embed_model
 
@@ -55,7 +55,7 @@ if uploaded_file is not None:
             except Exception as e:
                 st.error(f"Erreur lors de l'analyse : {e}")
 
-            # Nettoyage du fichier temporaire après l'indexation
+            # Nettoyage du fichier temporaire
             if os.path.exists(file_path):
                 os.remove(file_path)
             if os.path.exists(temp_dir):
@@ -79,14 +79,17 @@ if uploaded_file is not None:
 
             # Réponse de l'IA
             with st.chat_message("assistant"):
-                with st.spinner("🤔 L'IA réfléchit et cherche dans le document..."):
+                with st.spinner(
+                        "🤔 L'IA réfléchit et cherche dans le document... (peut prendre plusieurs minutes, sois patient !)"):
                     try:
                         response = query_engine.query(question)
                         reponse_texte = str(response)
                         st.markdown(reponse_texte)
+                        # CORRECTION 2 : On enregistre la réponse DANS le bloc 'try' pour éviter l'erreur NameError
+                        st.session_state[chat_key].append({"role": "assistant", "content": reponse_texte})
                     except Exception as e:
-                        st.error(f"Erreur de réponse : {e}")
-
-            st.session_state[chat_key].append({"role": "assistant", "content": reponse_texte})
+                        error_msg = f"Erreur (Timeout ou autre) : {e}. Le modèle met trop de temps à répondre."
+                        st.error(error_msg)
+                        st.session_state[chat_key].append({"role": "assistant", "content": error_msg})
 else:
     st.info("👈 Commence par uploader un fichier PDF ci-dessus pour démarrer l'analyse.")
