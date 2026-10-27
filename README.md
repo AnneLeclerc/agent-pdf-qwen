@@ -1,28 +1,29 @@
-# Agent PDF avec Qwen
+# 🤖 Agent PDF Qwen (Local RAG)
 
-Agent IA pour analyser des documents PDF localement, en utilisant **Qwen** (modèle local) et **LlamaIndex**.  
-Aucune donnée n'est envoyée sur internet : tout reste sur ton ordinateur.
+> **Développé à 13 ans par un jeune créateur algérien 🇩🇿**  
+> Un agent IA local, privé et puissant pour analyser et discuter avec vos documents PDF.
 
-## Fonctionnalités
+## 🌟 Pourquoi ce projet ?
+J'ai créé cet agent pour démontrer qu'il est possible de construire une solution d'IA avancée, **100% locale et confidentielle**, sans dépendre d'API cloud coûteuses ou de fuites de données. Tout le traitement (vectorisation et génération) reste sur votre machine.
 
-- Analyse de plusieurs PDF en même temps
-- Interface web simple et moderne (Streamlit)
-- 100% local et confidentiel
-- Questions/réponses sur le contenu des documents
+## 🛠️ Stack Technique
+- **Langage** : Python 3.10+
+- **Interface** : Streamlit (Web UI réactive)
+- **Moteur RAG** : LlamaIndex
+- **Modèle de génération** : Qwen (via Ollama)
+- **Modèle d'embedding** : nomic-embed-text
+- **Confidentialité** : 100% Local (Aucune donnée ne quitte l'ordinateur)
 
-## Prérequis
+## 🚀 Fonctionnalités
+- 📄 Ingestion et analyse de **plusieurs PDF simultanément**
+- 💬 Chat contextuel précis avec réponses sourcées
+- 🔒 **Zéro fuite de données** : idéal pour des documents sensibles
+- ⚡ Interface moderne et simple d'utilisation
 
-- [Python 3.10+](https://www.python.org/downloads/)
-- [Ollama](https://ollama.com/) installé et lancé
-- Les modèles suivants téléchargés dans Ollama :
-  - `qwen3.8:27b` (pour répondre aux questions)
-  - `nomic-embed-text` (pour indexer les PDF)
+## 📦 Installation et Lancement
 
-## Installation
-
-1. Clone ce dépôt :
+1. Assurez-vous d'avoir **Ollama** installé et en cours d'exécution sur votre machine.
+2. Téléchargez les modèles requis via votre terminal :
    ```bash
-   git clone https://github.com/AnneLeclerc/agent-pdf-qwen.git
-   cd agent-pdf-qwen
-
-Pour démarrer, il faut taper dans le terminal de pycharm (ou vscode) et taper :    streamlit run app.py
+   ollama pull qwen3.8:latest  # ou la version que vous utilisez
+   ollama pull nomic-embed-text
